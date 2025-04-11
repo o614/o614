@@ -2,154 +2,260 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>店铺二维码</title>
+    <title>果粉儿便利店</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <style>
-        /* 通用重置 */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: rgba(0,0,0,0);
-        }
+    :root {
+        --bg-color: #ffffff;
+        --text-color: #444;
+        --card-bg: #ffffff;
+        --border-color: rgba(0,0,0,0.06);
+        --link-color: #007AFF;
+        --footer-color: #666;
+    }
 
-        /* 布局容器 */
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background: #fff;
-            font-family: "PingFang SC", system-ui;
-        }
+    [data-theme="dark"] {
+        --bg-color: #1a1a1a;
+        --text-color: #e0e0e0;
+        --card-bg: #2d2d2d;
+        --border-color: rgba(255,255,255,0.08);
+        --link-color: #0A84FF;
+        --footer-color: #888;
+    }
 
-        /* 二维码容器 */
-        .container {
-            text-align: center;
-            padding: 20px;
-            width: 90%;
-            max-width: 400px;
-        }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        transition: all 0.3s ease;
+        line-height: 1.6;
+    }
 
-        /* 二维码图片 */
-        .qrcode {
-            width: 60%;
-            max-width: 300px;
-            border-radius: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            margin: 0 auto 30px;
-            display: block;
-        }
+    .wp {
+        width: 90%;
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 20px 0;
+    }
 
-        /* 主要按钮 */
-        .btn {
-            align-items: center;
-            border: 0 solid transparent;
-            border-radius: 8px;
-            display: flex;
-            font-size: 17px;
-            font-weight: 500;
-            height: 48px;
-            justify-content: center;
-            margin: 0 auto 15px;
-            outline: none;
-            overflow: hidden;
-            position: relative;
-            width: 184px;
-            background: #ff6146;
-            color: #fff;
-            transition: opacity 0.3s;
-        }
+    .center {
+        text-align: center;
+        margin: 30px 0;
+    }
 
-        .btn:active::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.1);
-        }
+    h1 {
+        font-size: 2.2rem;
+        margin: 0;
+        color: var(--text-color);
+    }
 
-        /* 提示文字 */
-        .tips {
-            color: rgba(0,0,0,0.9);
-            font-size: 15px;
-            line-height: 1.5;
-            opacity: 0.8;
-        }
+    .box {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 -10px;
+    }
 
-        /* Toast提示 */
-        .toast {
-            position: fixed;
-            top: 33vh;
-            width: 120px;
-            height: 120px;
-            visibility: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+    .e {
+        flex: 0 0 25%;
+        padding: 10px;
+        box-sizing: border-box;
+    }
 
-        .toast-content {
-            background: #4c4c4c;
-            border-radius: 8px;
-            padding: 20px;
-            opacity: 0;
-            transition: opacity 0.35s;
-            text-align: center;
-            color: rgba(255,255,255,0.8);
-        }
+    .card {
+        background: var(--card-bg);
+        border-radius: 12px;
+        padding: 20px;
+        transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        box-shadow: 0 1px 2px rgba(0,0,0,0.03), 
+                    0 4px 8px rgba(0,0,0,0.05), 
+                    0 10px 20px rgba(0,0,0,0.05);
+        border: 0.5px solid var(--border-color);
+    }
 
-        .toast-visible .toast-content {
-            opacity: 1;
+    .card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05), 
+                    0 8px 16px rgba(0,0,0,0.08), 
+                    0 15px 30px rgba(0,0,0,0.08);
+    }
+
+    [data-theme="dark"] .card {
+        box-shadow: 0 1px 2px rgba(0,0,0,0.2), 
+                    0 4px 8px rgba(0,0,0,0.15),
+                    0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    .row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    h5 {
+        font-size: 1.1rem;
+        margin: 0;
+        color: var(--text-color);
+    }
+
+    .price a {
+        font-weight: 500;
+        color: var(--link-color);
+        text-decoration: none;
+    }
+
+    .misc {
+        margin: 20px 0;
+        font-size: 0.95rem;
+    }
+
+    .hr {
+        border-bottom: 1px solid var(--border-color);
+        margin: 30px 0;
+    }
+
+    .foot {
+        text-align: center;
+        color: var(--footer-color);
+        margin-top: 40px;
+        font-size: 0.9rem;
+    }
+
+    .theme-toggle {
+        position: fixed;
+        right: 25px;
+        bottom: 25px;
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        padding: 10px 20px;
+        border-radius: 30px;
+        cursor: pointer;
+        color: var(--text-color);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        z-index: 100;
+    }
+
+    @media (max-width: 768px) {
+        .e {
+            flex: 0 0 100%;
         }
+        .card {
+            margin: 5px;
+            padding: 15px;
+        }
+        h1 {
+            font-size: 1.8rem;
+        }
+    }
     </style>
 </head>
 <body>
-    <div class="container">
-        <img src="https://uchat.cn-bj.ufileos.com/rw_ee3a0259-509e-4a12-bb34-992367fcf7c4_qrcode.png" 
-             alt="店铺二维码" 
-             class="qrcode">
-        <button class="btn" onclick="copyLink()">复制店铺链接</button>
-        <p class="tips">复制后，可在微信内打开链接查看商品。</p>
-    </div>
+    <button class="theme-toggle" onclick="toggleTheme()">🌓 切换主题</button>
 
-    <!-- Toast 提示 -->
-    <div class="toast" id="toast">
-        <div class="toast-content">
-            <svg class="toast-icon" viewBox="0 0 24 24" width="46" height="46">
-                <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
-            </svg>
-            <div class="toast-text">复制成功</div>
+    <div class="wp">
+        <div class="center">
+            <h1>果粉便利店</h1>
+        </div>
+
+        <div class="box">
+            <div class="e">
+                <div class="card">
+                    <div class="row">
+                        <h5>Apple ID 注册（20元）</h5>
+                        <span class="price"><a href="https://chatbot.weixin.qq.com/webapp/BNdgzvZEjvkaygCreiiiJvRZgFLJPy?robotName=%E5%87%B9%E5%87%B8%E6%95%B0%E5%8D%A1" rel="noopener noreferrer">购买</a></span>
+                    </div>
+                    <p>人工定制注册</p>
+                </div>
+            </div>
+
+            <div class="e">
+                <div class="card">
+                    <div class="row">
+                        <h5>Apple 礼品卡</h5>
+                        <span class="price"><a href="https://chatbot.weixin.qq.com/webapp/BNdgzvZEjvkaygCreiiiJvRZgFLJPy?robotName=%E5%87%B9%E5%87%B8%E6%95%B0%E5%8D%A1" rel="noopener noreferrer">购买</a></span>
+                    </div>
+                    <p>美国、日本、土耳其</p>
+                </div>
+            </div>
+
+            <div class="e">
+                <div class="card">
+                    <div class="row">
+                        <h5>ChatGpt 账号（20元）</h5>
+                        <span class="price"><a href="https://chatbot.weixin.qq.com/webapp/BNdgzvZEjvkaygCreiiiJvRZgFLJPy?robotName=%E5%87%B9%E5%87%B8%E6%95%B0%E5%8D%A1" rel="noopener noreferrer">购买</a></span>
+                    </div>
+                    <p>5 美金成品号</p>
+                </div>
+            </div>
+
+            <div class="e">
+                <div class="card">
+                    <div class="row">
+                        <h5>Google 账号（20元）</h5>
+                        <span class="price"><a href="https://chatbot.weixin.qq.com/webapp/BNdgzvZEjvkaygCreiiiJvRZgFLJPy?robotName=%E5%87%B9%E5%87%B8%E6%95%B0%E5%8D%A1" rel="noopener noreferrer">购买</a></span>
+                    </div>
+                    <p>人工定制注册</p>
+                </div>
+            </div>
+
+            <div class="e">
+                <div class="card">
+                    <div class="row">
+                        <h5>Spotify 账号（20元）</h5>
+                        <span class="price"><a href="https://chatbot.weixin.qq.com/webapp/BNdgzvZEjvkaygCreiiiJvRZgFLJPy?robotName=%E5%87%B9%E5%87%B8%E6%95%B0%E5%8D%A1" rel="noopener noreferrer">购买</a></span>
+                    </div>
+                    <p>人工定制注册</p>
+                </div>
+            </div>
+
+            <div class="e">
+                <div class="card">
+                    <div class="row">
+                        <h5>其他咨询服务</h5>
+                        <span class="price"><a href="https://chatbot.weixin.qq.com/webapp/BNdgzvZEjvkaygCreiiiJvRZgFLJPy?robotName=%E5%87%B9%E5%87%B8%E6%95%B0%E5%8D%A1" rel="noopener noreferrer">购买</a></span>
+                    </div>
+                    <p>详询客服</p>
+                </div>
+            </div>
+
+            <div class="e sold">
+                <div class="card">
+                    <div class="row">
+                        <h5>X 账号（20元）</h5>
+                        <span class="price">售罄</span>
+                    </div>
+                    <p>人工定制注册</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="hr"></div>
+        <div class="misc">微信：ehpass</div>
+
+        <div class="hr"></div>
+        <div class="misc">
+            <a href="https://www.zhihu.com/people/ehpass" target="_blank" rel="noopener noreferrer">知乎</a>
+        </div>
+
+        <div class="foot">
+            Powered by <a href="https://www.zhihu.com/people/ehpass" target="_blank" rel="noopener noreferrer">ehpass</a>
         </div>
     </div>
 
     <script>
-        function copyLink() {
-            const link = '#小程序://果粉丨便利店/fXbGBbGRpOTjfnb';
-            const toast = document.getElementById('toast');
+    function toggleTheme() {
+        const current = document.documentElement.getAttribute('data-theme') || 'light';
+        const newTheme = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+    }
 
-            navigator.clipboard.writeText(link)
-                .then(() => {
-                    showToast();
-                })
-                .catch(err => {
-                    console.error('复制失败:', err);
-                    alert('复制失败，请手动复制');
-                });
-        }
-
-        function showToast() {
-            const toast = document.getElementById('toast');
-            toast.style.visibility = 'visible';
-            toast.classList.add('toast-visible');
-            
-            setTimeout(() => {
-                toast.style.visibility = 'hidden';
-                toast.classList.remove('toast-visible');
-            }, 2000);
-        }
+    function initTheme() {
+        const savedTheme = localStorage.getItem('theme') || 
+            (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    }
+    initTheme();
     </script>
 </body>
 </html>
